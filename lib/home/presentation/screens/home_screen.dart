@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laboratory/constants.dart';
+import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/splash/presentation/screen/splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: primaryColor,
               title: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Text('Appoinments'),
+                child: Text('Appointments'),
               ),
               titleTextStyle: TextStyle(fontSize: 18),
               actions: [
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           body: const TabBarView(
             children: [
-              SplashScreen(),
+              OpenScreen(),
               SplashScreen(),
               SplashScreen(),
             ],

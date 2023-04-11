@@ -35,7 +35,12 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   animated_splash_screen:
-  custom_sliding_segmented_control:
+  google_maps_flutter: ^2.1.8
+  geolocator: ^9.0.2
+  flutter_phone_direct_caller:
+  url_launcher:
+  map_launcher:
+
 
 dev_dependencies:
   flutter_test:
