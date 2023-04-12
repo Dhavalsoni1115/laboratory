@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:laboratory/constants.dart';
 import 'package:laboratory/open/presentation/screens/open_screen.dart';
+import 'package:laboratory/shared/data/data_source/get_staff_data.dart';
+import 'package:laboratory/shared/presentation/model/staff_model.dart';
 import 'package:laboratory/splash/presentation/screen/splash_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,16 +17,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int groupValue = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // print('Hello');
+  }
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle.light.copyWith(
-        systemNavigationBarIconBrightness: Brightness.light,
-        systemNavigationBarColor: primaryColor,
-        statusBarIconBrightness: Brightness.light,
-        statusBarColor: primaryColor, // Note RED here
-      ),
-    );
     return SafeArea(
       child: DefaultTabController(
         length: 3,

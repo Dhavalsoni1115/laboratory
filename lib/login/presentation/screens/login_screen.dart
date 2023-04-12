@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratory/constants.dart';
+import 'package:laboratory/home/presentation/screens/home_screen.dart';
 import 'package:laboratory/login/presentation/widgets/login_button.dart';
 import 'package:laboratory/login/presentation/widgets/textfield_data.dart';
+import 'package:laboratory/shared/data/data_source/get_staff_data.dart';
+
+import '../../../shared/presentation/model/staff_model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -11,14 +16,45 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _loginKey = GlobalKey<FormState>();
+  bool passwordVisible = true;
+  IconData passwordIcon = Icons.remove_red_eye_rounded;
+  String? email, password;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  List<StaffModel> staffData = [];
+  getStaff() async {
+    var staff = Staff();
+    List<dynamic> staffDynamicData = await staff.getStaffDetail();
+    staffData =
+        staffDynamicData.map((data) => StaffModel.fromJson(data)).toList();
+    setState(() {
+      staffData;
+    });
+    print(staffData);
+    return staffData;
+  }
+
+  StaffModel? selectedStaffData;
+  getSelectedStaff(String staffId) async {
+    var staff = Staff();
+    dynamic staffData = await staff.getSelectStaffDetail(staffId);
+    selectedStaffData = StaffModel.fromJson(staffData);
+    setState(() {
+      selectedStaffData;
+    });
+    print(selectedStaffData);
+    return selectedStaffData;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getStaff();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _loginKey = GlobalKey<FormState>();
-    bool passwordVisible = true;
-    IconData passwordIcon = Icons.remove_red_eye_rounded;
-    String email, password;
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -45,54 +81,62 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  TextFormFieldData(
-                    controoler: emailController,
+                  TextFormField(
+                    controller: emailController,
+                    //controoler: emailController,
                     obscureText: false,
-                    labelText: 'Email *',
-                    prefixIcon: Icons.email,
-                    onSaved: (emailValue) {
+                    onChanged: (emailValue) {
                       setState(() {
                         email = emailValue.toString();
                         print(emailValue);
                         print(email);
                       });
                     },
+                    // labelText: 'Email *',
+                    // prefixIcon: Icons.email,
+                    // onSaved: (emailValue) {
+                    //   setState(() {
+                    //     email = emailValue.toString();
+                    //     print(emailValue);
+                    //     print(email);
+                    //   });
+                    // },
                     validator: (String? value) {
-                      return (value != null && value.contains('@'))
-                          ? 'Do not use the @ char.'
-                          : null;
+                      // return (value != null && value.contains('@'))
+                      //     ? 'Do not use the @ char.'
+                      //     : null;
                     },
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: TextFormFieldData(
+                    child: TextFormField(
                       obscureText: passwordVisible,
-                      controoler: passwordController,
-                      labelText: 'Password *',
-                      prefixIcon: Icons.key,
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // Based on passwordVisible state choose the icon
-                          passwordVisible == false
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: primaryColor,
-                        ),
-                        onPressed: () {
-                          // Update the state i.e. toogle the state of passwordVisible variable
-                          setState(() {
-                            passwordVisible = !passwordVisible;
-                            print(passwordVisible);
-                          });
-                        },
-                      ),
-                      onSaved: (passwordValue) {
+                      controller: passwordController,
+                      //labelText: 'Password *',
+                      // prefixIcon: Icons.key,
+                      // suffixIcon: IconButton(
+                      //   icon: Icon(
+                      //     // Based on passwordVisible state choose the icon
+                      //     passwordVisible == false
+                      //         ? Icons.visibility
+                      //         : Icons.visibility_off,
+                      //     color: primaryColor,
+                      //   ),
+                      //   onPressed: () {
+                      //     // Update the state i.e. toogle the state of passwordVisible variable
+                      //     setState(() {
+                      //       passwordVisible = !passwordVisible;
+                      //       print(passwordVisible);
+                      //     });
+                      //   },
+                      // ),
+                      onChanged: (passwordValue) {
                         setState(() {
                           password = passwordValue.toString();
                         });
                       },
                       validator: (String? value) {
-                        return (value != null) ? 'Enter Password' : null;
+                        // return (value != null) ? 'Enter Password' : null;
                       },
                     ),
                   ),
@@ -121,10 +165,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 50,
                       child: LoginButton(
                         buttonColor: primaryColor,
-                        onPress: () {
-                          // print(email.toString());
-                          // print(password.toString());
-                          // Validate returns true if the form is valid, or false otherwise.
+                        onPress: () async {
+                          print(email);
+                          print(password);
                           if (_loginKey.currentState!.validate()) {
                             // If the form is valid, display a snackbar. In the real world,
                             // you'd often call a server or save the information in a database.
@@ -135,6 +178,36 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             );
                           }
+
+                          var loginUser = Staff();
+                          //getCuttentStaffId();
+                          print('********');
+
+                          var staffId = await loginUser.signInStaff(
+                            context: context,
+                            email: email!,
+                            password: password!,
+                          );
+                          print(staffId);
+                          // StaffModel selectedStaffdata =
+                          //     await loginUser.getSelectStaffDetail(staffId);
+                          // getSelectedStaffDetail(staffId);
+
+                          print('xcvbxchvbxhmcv======');
+                          await getSelectedStaff(staffId);
+                          String selectedId =
+                              await selectedStaffData!.id.toString();
+                          if (staffId == selectedStaffData!.id) {
+                            if (selectedStaffData!.active == true) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => HomeScreen(),
+                                ),
+                              );
+                            }
+                          }
+                          // print(selectedStaffdata.toJson());
                         },
                         buttonName: 'Login',
                       ),

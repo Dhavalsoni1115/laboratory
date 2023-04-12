@@ -40,7 +40,7 @@ class CardDetail extends StatelessWidget {
                       BoxShadow(
                         color: primaryColor,
                         offset: const Offset(
-                          5.0,
+                          3.0,
                           3.0,
                         ),
                         blurRadius: 3.0,

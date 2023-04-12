@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:laboratory/constants.dart';
+import 'package:laboratory/home/presentation/screens/home_screen.dart';
+import 'package:laboratory/open/data/call_data.dart';
+import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/shared/presentation/widget/common_button.dart';
 import 'package:laboratory/shared/presentation/widget/show_text.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,22 +37,55 @@ class _OpenDetailScreenState extends State<OpenDetailScreen> {
         padding: const EdgeInsets.all(15),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                children: [
+                  ShowText(label: 'Date:', detail: '21 jan 2023'),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  ShowText(label: 'Slot:', detail: '08:00 to 08:30 AM'),
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
               Row(
                 children: [
                   ShowText(label: 'Email:', detail: 'Dhaval@gmail.com'),
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ShowText(label: 'Mobile:', detail: '8320069125'),
+                  GestureDetector(
+                      onTap: () async {
+                        var call = Call();
+                        await call.makeCall();
+                      },
+                      child: ShowText(label: 'Mobile:', detail: '8320069125')),
+                  IconButton(
+                    onPressed: () async {
+                      var call = Call();
+                      await call.makeCall();
+                    },
+                    icon: Icon(
+                      Icons.call,
+                      color: Colors.green,
+                    ),
+                  ),
                 ],
               ),
               SizedBox(
-                height: 15,
+                height: 5,
               ),
               Row(
                 children: [
@@ -75,7 +111,7 @@ class _OpenDetailScreenState extends State<OpenDetailScreen> {
               Container(
                 height: 300,
                 width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 15),
+                margin: const EdgeInsets.symmetric(vertical: 15),
                 decoration: BoxDecoration(
                   border: Border.all(
                     width: 0.3,
@@ -121,17 +157,18 @@ class _OpenDetailScreenState extends State<OpenDetailScreen> {
                       child: CommonButton(
                         buttonName: 'Make Call',
                         onPresse: () async {
-                          Uri phoneno = Uri.parse('tel:8320069125');
-                          if (await launchUrl(phoneno)) {
-                            await launchUrl(phoneno);
-                          } else {
-                            print('No dail');
-                          }
+                          var call = Call();
+                          await call.makeCall();
                         },
                       ),
                     ),
                   ),
                 ],
+              ),
+              Text('Select Your Status:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              SizedBox(
+                height: 10,
               ),
               Row(
                 children: [
@@ -169,7 +206,11 @@ class _OpenDetailScreenState extends State<OpenDetailScreen> {
                     width: 100,
                     child: CommonButton(
                       buttonName: 'Update',
-                      onPresse: () {},
+                      onPresse: () {
+                        setState(() {
+                          print(dropdownValue);
+                        });
+                      },
                     ),
                   ),
                 ],
