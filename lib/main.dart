@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:laboratory/constants.dart';
@@ -31,7 +32,7 @@ class _MyAppState extends State<MyApp> {
   getToken() async {
     var sharedPref = LoginSharedPrefrance();
     token = await sharedPref.getLoginToken();
-    print(token);
+    //print(token);
     setState(() {
       token;
     });
@@ -57,9 +58,7 @@ class _MyAppState extends State<MyApp> {
     );
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home:
-      //SplashScreen()
-       token == null
+      home: token == null
           ? AnimatedSplashScreen(
               backgroundColor: backgroundColor,
               splash: const SplashScreen(),
@@ -68,15 +67,6 @@ class _MyAppState extends State<MyApp> {
               splashTransition: SplashTransition.fadeTransition,
             )
           : HomeScreen(staffId: token.toString()),
-      //LoginScreen(),
-      //  OpenDetailScreen(),
-      //     AnimatedSplashScreen(
-      //   backgroundColor: backgroundColor,
-      //   splash: SplashScreen(),
-      //   nextScreen: LoginScreen(),
-      //   duration: 1000,
-      //   splashTransition: SplashTransition.fadeTransition,
-      // ),
     );
   }
 }

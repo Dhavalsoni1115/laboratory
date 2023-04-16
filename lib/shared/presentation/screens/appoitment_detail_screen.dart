@@ -215,8 +215,8 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                                           mapLauncher.DirectionsMode.driving,
                                       destinationTitle: 'Destination Location',
                                       destination: mapLauncher.Coords(
-                                        20.5992,
-                                        72.9342,
+                                        20.5965,
+                                        72.8996,
                                       ),
                                     );
                                   });

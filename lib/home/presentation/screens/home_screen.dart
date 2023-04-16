@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratory/complete/presentation/screens/complete_screen.dart';
 import 'package:laboratory/constants.dart';
@@ -24,20 +25,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int groupValue = 0;
-  // tokenRemove() async {
-  //   var sharedPref = LoginSharedPrefrance();
-  //   var token = await sharedPref.getLoginToken();
-  //   var remove = await token.remove('LoginToken');
-  //   setState(() {
-  //     remove;
-  //   });
-  //   return remove;
-  // }
 
   @override
   void initState() {
     super.initState();
-    // print('Hello');
   }
 
   @override
@@ -125,8 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
           body: TabBarView(
             children: [
               OpenScreen(staffId: widget.staffId),
-              OnGoingScreen(),
-              CompleteScreen(),
+              OnGoingScreen(
+                staffId: widget.staffId,
+              ),
+              CompleteScreen(
+                staffId: widget.staffId,
+              ),
             ],
           ),
         ),

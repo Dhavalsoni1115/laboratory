@@ -48,9 +48,7 @@ dependencies:
   firebase_messaging: 
   flutter_local_notifications: 
   skeleton_loader: ^2.0.0+4
-  skeletons: 
-  flutter_polyline_points: 
-  location:
+  skeletons:
 
 
 dev_dependencies:

@@ -37,14 +37,17 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           initialCameraPosition: _kGooglePlex,
           markers: {
             Marker(
-              markerId: MarkerId("marker1"),
-              position: _kGooglePlex.target,
-              draggable: true,
-              // onDragEnd: (value) {
-              //   // value is the new position
-              // },
-              // To do: custom marker icon
-            ),
+                markerId: MarkerId("marker1"),
+                position: _kGooglePlex.target,
+                draggable: true,
+                onTap: () {
+                  print('hello');
+                }
+                // onDragEnd: (value) {
+                //   // value is the new position
+                // },
+                // To do: custom marker icon
+                ),
             // Marker(
             //   markerId: const MarkerId("marker2"),
             //   position: const LatLng(20.7702, 72.9824),
