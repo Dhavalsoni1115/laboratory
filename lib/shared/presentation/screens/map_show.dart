@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleMapScreen extends StatefulWidget {
-  // final double latitude, longitude;
+  final double latitude, longitude;
   const GoogleMapScreen({
     Key? key,
-    // required this.latitude,
-    // required this.longitude,
+    required this.latitude,
+    required this.longitude,
   }) : super(key: key);
 
   @override
@@ -20,13 +20,14 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
-  final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(20.5992, 72.9342),
-    zoom: 15,
-  );
-
   @override
   Widget build(BuildContext context) {
+    final CameraPosition _kGooglePlex = CameraPosition(
+      target: LatLng(widget.latitude, widget.longitude),
+      // (20.5992, 72.9342)
+      zoom: 14,
+    );
+
     return SafeArea(
       child: Scaffold(
         body: GoogleMap(
@@ -37,7 +38,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
           markers: {
             Marker(
               markerId: MarkerId("marker1"),
-              position: LatLng(20.5992, 72.9342),
+              position: _kGooglePlex.target,
               draggable: true,
               // onDragEnd: (value) {
               //   // value is the new position

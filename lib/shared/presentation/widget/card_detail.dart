@@ -40,8 +40,8 @@ class CardDetail extends StatelessWidget {
                       BoxShadow(
                         color: primaryColor,
                         offset: const Offset(
-                          3.0,
-                          3.0,
+                          1.0,
+                          1.0,
                         ),
                         blurRadius: 3.0,
                         spreadRadius: 1.0,
@@ -95,7 +95,7 @@ class CardDetail extends StatelessWidget {
                           Text(
                             time,
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 14.5,
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold),
                           ),

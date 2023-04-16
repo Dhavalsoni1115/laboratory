@@ -5,8 +5,11 @@ import 'package:laboratory/home/presentation/screens/home_screen.dart';
 import 'package:laboratory/login/presentation/widgets/login_button.dart';
 import 'package:laboratory/login/presentation/widgets/textfield_data.dart';
 import 'package:laboratory/shared/data/data_source/get_staff_data.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../shared/presentation/model/staff_model.dart';
+import '../../data/data_source/staff_shared_pref.dart';
+import '../widgets/common_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -81,63 +84,70 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  TextFormField(
-                    controller: emailController,
-                    //controoler: emailController,
-                    obscureText: false,
-                    onChanged: (emailValue) {
-                      setState(() {
-                        email = emailValue.toString();
-                        print(emailValue);
-                        print(email);
-                      });
-                    },
-                    // labelText: 'Email *',
-                    // prefixIcon: Icons.email,
-                    // onSaved: (emailValue) {
-                    //   setState(() {
-                    //     email = emailValue.toString();
-                    //     print(emailValue);
-                    //     print(email);
-                    //   });
-                    // },
-                    validator: (String? value) {
-                      // return (value != null && value.contains('@'))
-                      //     ? 'Do not use the @ char.'
-                      //     : null;
-                    },
+                  Container(
+                    padding: EdgeInsets.only(left: 15, right: 15),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: primaryColor,
+                        width: 2,
+                      ),
+                    ),
+                    child: CommonTextField(
+                      labelName: 'Email',
+                      obscureText: false,
+                      onChange: (emailValue) {
+                        email = emailValue;
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please Enter Email';
+                        }
+                        return null;
+                      },
+                    ),
+                    //  TextFormField(
+                    //   controller: emailController,
+                    //   obscureText: false,
+                    //   decoration: InputDecoration(
+                    //     // hintText: 'Email',
+                    //     border: InputBorder.none,
+                    //     label: Text('Email'),
+                    //   ),
+                    //   onChanged: (emailValue) {
+                    //     setState(() {
+                    //       email = emailValue.toString();
+                    //       print(emailValue);
+                    //       print(email);
+                    //     });
+                    //   },
+                    //   validator: (String? value) {
+                    //     return (value == null) ? 'Enter Email' : null;
+                    //   },
+                    // ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
-                    child: TextFormField(
-                      obscureText: passwordVisible,
-                      controller: passwordController,
-                      //labelText: 'Password *',
-                      // prefixIcon: Icons.key,
-                      // suffixIcon: IconButton(
-                      //   icon: Icon(
-                      //     // Based on passwordVisible state choose the icon
-                      //     passwordVisible == false
-                      //         ? Icons.visibility
-                      //         : Icons.visibility_off,
-                      //     color: primaryColor,
-                      //   ),
-                      //   onPressed: () {
-                      //     // Update the state i.e. toogle the state of passwordVisible variable
-                      //     setState(() {
-                      //       passwordVisible = !passwordVisible;
-                      //       print(passwordVisible);
-                      //     });
-                      //   },
-                      // ),
-                      onChanged: (passwordValue) {
-                        setState(() {
-                          password = passwordValue.toString();
-                        });
-                      },
-                      validator: (String? value) {
-                        // return (value != null) ? 'Enter Password' : null;
-                      },
+                    child: Container(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: primaryColor,
+                          width: 2,
+                        ),
+                      ),
+                      child: CommonTextField(
+                        labelName: 'Password',
+                        obscureText: true,
+                        onChange: (passwordValue) {
+                          password = passwordValue;
+                        },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter Password';
+                          }
+                          return null;
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -168,17 +178,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPress: () async {
                           print(email);
                           print(password);
-                          if (_loginKey.currentState!.validate()) {
-                            // If the form is valid, display a snackbar. In the real world,
-                            // you'd often call a server or save the information in a database.
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content:
-                                    Text('Please Enter Email and Password.'),
-                              ),
-                            );
-                          }
-
                           var loginUser = Staff();
                           //getCuttentStaffId();
                           print('********');
@@ -189,24 +188,47 @@ class _LoginScreenState extends State<LoginScreen> {
                             password: password!,
                           );
                           print(staffId);
-                          // StaffModel selectedStaffdata =
-                          //     await loginUser.getSelectStaffDetail(staffId);
-                          // getSelectedStaffDetail(staffId);
+                          if (_loginKey.currentState!.validate() && staffId != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Login Sucessfull')),
+                            );
+                          }else
+                          {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Incorrect Email And Password.')),
+                            ); 
+                          }
 
+                          //await sharedPref.storeLoginToken(staffId.toString());
+                          // String token = await sharedPref.getLoginToken();
+                          // print(token);
                           print('xcvbxchvbxhmcv======');
                           await getSelectedStaff(staffId);
                           String selectedId =
                               await selectedStaffData!.id.toString();
+
                           if (staffId == selectedStaffData!.id) {
                             if (selectedStaffData!.active == true) {
+                              var sharedPref = LoginSharedPrefrance();
+                              await sharedPref
+                                  .storeLoginToken(staffId.toString());
+                              Center(
+                                child: LoadingAnimationWidget.dotsTriangle(
+                                  color: secondaryColor,
+                                  size: 200,
+                                ),
+                              );
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
+                                  builder: (context) => HomeScreen(
+                                    staffId: staffId.toString(),
+                                  ),
                                 ),
                               );
                             }
                           }
+
                           // print(selectedStaffdata.toJson());
                         },
                         buttonName: 'Login',

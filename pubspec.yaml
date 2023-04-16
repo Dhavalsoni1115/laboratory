@@ -43,6 +43,14 @@ dependencies:
   http: 
   cloud_firestore:
   firebase_auth: ^0.20.1
+  loading_animation_widget:
+  shared_preferences: ^2.0.17
+  firebase_messaging: 
+  flutter_local_notifications: 
+  skeleton_loader: ^2.0.0+4
+  skeletons: 
+  flutter_polyline_points: 
+  location:
 
 
 dev_dependencies:

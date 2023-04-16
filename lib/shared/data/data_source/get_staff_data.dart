@@ -59,14 +59,6 @@ class Staff {
         }
       });
       return selectedStaffData;
-      // QuerySnapshot querySnapshot =
-      //     await FirebaseFirestore.instance.collection('staff').get(staffId);
-      // staffData = querySnapshot.docs.map((doc) {
-      //   staffId = doc.id;
-      //   doc.data();
-      //   return {'id': staffId, ...doc.data()};
-      // }).toList();
-      // return staffData;
     } catch (e) {
       print(e);
     }

@@ -2,14 +2,21 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:laboratory/complete/presentation/screens/complete_screen.dart';
 import 'package:laboratory/constants.dart';
+import 'package:laboratory/login/presentation/screens/login_screen.dart';
+import 'package:laboratory/ongoing/presentation/screens/ongoing_screen.dart';
 import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/shared/data/data_source/get_staff_data.dart';
 import 'package:laboratory/shared/presentation/model/staff_model.dart';
 import 'package:laboratory/splash/presentation/screen/splash_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../login/data/data_source/staff_shared_pref.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String staffId;
+  const HomeScreen({Key? key, required this.staffId}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -17,6 +24,15 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int groupValue = 0;
+  // tokenRemove() async {
+  //   var sharedPref = LoginSharedPrefrance();
+  //   var token = await sharedPref.getLoginToken();
+  //   var remove = await token.remove('LoginToken');
+  //   setState(() {
+  //     remove;
+  //   });
+  //   return remove;
+  // }
 
   @override
   void initState() {
@@ -34,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
             preferredSize: const Size.fromHeight(70),
             child: AppBar(
               backgroundColor: primaryColor,
+              automaticallyImplyLeading: false,
               title: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: Text('Appointments'),
@@ -46,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () {
                       showDialog<String>(
                         context: context,
+                        barrierDismissible: false,
                         builder: (BuildContext context) => AlertDialog(
                           shape: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -62,7 +80,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             TextButton(
-                              onPressed: () => Navigator.pop(context, 'OK'),
+                              onPressed: () async {
+                                var loginPref = LoginSharedPrefrance();
+                                await loginPref.removeToken();
+
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
+                                    ));
+                              },
                               child: const Text(
                                 'OK',
                                 style: TextStyle(color: primaryColor),
@@ -79,27 +106,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )
               ],
-              bottom: TabBar(indicatorColor: secondaryColor, tabs: [
+              bottom: const TabBar(indicatorColor: secondaryColor, tabs: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text('Open'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text('Ongoing'),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  padding: EdgeInsets.symmetric(vertical: 10),
                   child: Text('Completed'),
                 ),
               ]),
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              OpenScreen(),
-              SplashScreen(),
-              SplashScreen(),
+              OpenScreen(staffId: widget.staffId),
+              OnGoingScreen(),
+              CompleteScreen(),
             ],
           ),
         ),
