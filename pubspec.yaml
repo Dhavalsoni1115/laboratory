@@ -49,6 +49,7 @@ dependencies:
   flutter_local_notifications: 
   skeleton_loader: ^2.0.0+4
   skeletons:
+  app_settings: ^4.1.6
 
 
 dev_dependencies:

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratory/constants.dart';
@@ -6,6 +8,9 @@ import 'package:laboratory/shared/data/data_source/call_data.dart';
 import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/shared/data/data_source/get_appoitment_data.dart';
 import 'package:laboratory/shared/presentation/model/appoitment_model.dart';
+import 'package:laboratory/shared/presentation/model/geolocation_model.dart';
+import 'package:laboratory/shared/presentation/model/healthpackage_model.dart';
+import 'package:laboratory/shared/presentation/model/tests_model.dart';
 import 'package:laboratory/shared/presentation/widget/common_button.dart';
 import 'package:laboratory/shared/presentation/widget/show_text.dart';
 import 'package:skeletons/skeletons.dart';
@@ -41,16 +46,51 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
     var appoitment = Appoitment();
     dynamic appoitmentData =
         await appoitment.getAppoitment(widget.appoitmentId);
-    print(appoitmentData);
-    selectedAppoitmentData = AppoitmentModel.fromJson(appoitmentData);
-    // selectedAppoitmentData!.geoLocation =
+    // print('.....................................');
+    // appoitmentData?['geoLocation'] =
     //     GeoLocation.fromJson(appoitmentData?['geoLocation']);
+    // appoitmentData?['healthPackage'] =
+    //     HealthPackage.fromJson(appoitmentData?['healthPackage']);
+    // dynamic testPlans;
+    // dynamic tests;
+    // for (var i in appoitmentData?['tests']) {
+    //   setState(() {
+    //     tests = i;
+    //     testPlans = i['plans'];
+    //   });
+    // }
 
+    // print('..........???');
+    // print(tests);
+    // print(testPlans);
+    // print('..........ZZZZ');
+    // print(appoitmentData['tests']);
+
+    //final planList = testPlans.map((i) => Plans.fromJson(i)).toList();
+    //List<Tests> testList = tests.map((i as Map<String, dynamic>) => Tests.fromJson(i)).toList();
+    //  List<Plans> planList =
+    //     appoitmentData?['tests'][0]['plans'].map((i) => Plans.fromJson(jsonDecode(i))).toList();
+
+    //print('+++++++++');
+    // print(planList);
+    //  print(testList);
+
+    // print(appoitmentData?['tests'][0]['plans']);
+    // appoitmentData?['tests'] = test;
+    // appoitmentData?['tests'] = Tests.fromJson(appoitmentData?['tests']);
+    // appoitmentData?['tests'][0]['plans'] = planList;
+
+    //appoitmentData?['tests'] = Tests.fromJson(appoitmentData?['tests']);
+
+    selectedAppoitmentData = AppoitmentModel.fromJson(appoitmentData);
+
+    // selectedAppoitmentData!.geoLocation = location;
+    // selectedAppoitmentData!.geoLocation =
+    //     location.lat != null ? location : null;
+    // print(selectedAppoitmentData!.toJson());
     // selectedAppoitmentData!.healthPackage =
     //     HealthPackage.fromJson(appoitmentData?['healthPackage']);
-    // selectedAppoitmentData!.tests = Tests.fromJson(appoitmentData?['tests']);
-
-    //  print(selectedAppoitmentData!.geoLocation!.toJson().toString());
+    //selectedAppoitmentData!.tests = Tests.fromJson(appoitmentData?['tests']);
 
     print(selectedAppoitmentData);
     setState(() {
@@ -124,57 +164,72 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                   children: [
                     GestureDetector(
                       onTap: () async {
-                        var call = Call();
-                        await call.makeCall(
-                            selectedAppoitmentData!.mobile.toString());
+                        if (selectedAppoitmentData!.status == 'Completed') {
+                          print('no call');
+                        } else {
+                          var call = Call();
+                          await call.makeCall(
+                              selectedAppoitmentData!.mobile.toString());
+                        }
                       },
                       child: ShowText(
                         label: 'Mobile:',
                         detail: selectedAppoitmentData!.mobile.toString(),
                       ),
                     ),
+                    // selectedAppoitmentData!.status == 'Completed'?SizedBox(height: 10,):
                     IconButton(
                       onPressed: () async {
-                        var call = Call();
-                        await call.makeCall(
-                            selectedAppoitmentData!.mobile.toString());
+                        if (selectedAppoitmentData!.status == 'Completed') {
+                          print('No Call');
+                        } else {
+                          var call = Call();
+                          await call.makeCall(
+                              selectedAppoitmentData!.mobile.toString());
+                        }
                       },
-                      icon: Icon(
-                        Icons.call,
-                        color: Colors.green,
-                      ),
+                      icon: selectedAppoitmentData!.status == 'Completed'
+                          ? SizedBox()
+                          : Icon(
+                              Icons.call,
+                              color: Colors.green,
+                            ),
                     ),
                   ],
                 ),
                 SizedBox(
                   height: 5,
                 ),
-                // Row(
-                //   children: [
-                //     ShowText(
-                //         label: 'Health Package:',
-                //         detail: selectedAppoitmentData!.healthPackage!.name
-                //             .toString()),
-                //   ],
-                // ),
-                SizedBox(
-                  height: 15,
+                Row(
+                  children: [
+                    ShowText(
+                      label: 'Health Package:',
+                      detail: selectedAppoitmentData!.healthPackage['name']
+                          .toString(),
+                    ),
+                  ],
                 ),
-                // Row(
-                //   children: [
-                //     ShowText(
-                //         label: 'Test:',
-                //         detail: selectedAppoitmentData!.tests.toString()),
-                //   ],
-                // ),
                 SizedBox(
                   height: 15,
                 ),
                 Row(
                   children: [
                     ShowText(
-                        label: 'Address:',
-                        detail: selectedAppoitmentData!.address.toString()),
+                      label: 'Test:',
+                      detail:
+                          selectedAppoitmentData!.tests[0]['name'].toString(),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    ShowText(
+                      label: 'Address:',
+                      detail: selectedAppoitmentData!.address.toString(),
+                    ),
                   ],
                 ),
                 Container(
@@ -314,12 +369,12 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
           //   skeleton: SkeletonListView(),
           //   child: Container(child: Center(child: ListTile())),
           // );
-          // ProgressIndicator();
+          //     // ProgressIndicator();
           Center(
         child: LoadingAnimationWidget.twistingDots(
           leftDotColor: primaryColor,
           rightDotColor: secondaryColor,
-          size: 200,
+          size: 100,
         ),
       );
     }

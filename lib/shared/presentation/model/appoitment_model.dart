@@ -1,113 +1,8 @@
 import 'dart:convert';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-class GeoLocation {
-  double? lat, long;
-  GeoLocation({required this.lat, required this.long});
-  GeoLocation.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    long = json['long'];
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['long'] = long;
-    return data;
-  }
-}
-
-class Plans {
-  String? planId, planName, price;
-  Plans({
-    required this.planId,
-    required this.planName,
-    required this.price,
-  });
-  Plans.fromJson(Map<String, dynamic> json) {
-    planId = json['planId'];
-    planName = json['planName'];
-    price = json['price'].toString();
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['planId'] = planId;
-    data['planName'] = planName;
-    data['price'] = price;
-    return data;
-  }
-}
-
-class Tests {
-  String? homeCollection, id, name, price;
-  List<Plans>? plans;
-  bool? outSource, active;
-  Tests({
-    this.active,
-    this.id,
-    this.homeCollection,
-    this.name,
-    this.outSource,
-    this.plans,
-    this.price,
-  });
-  Tests.fromJson(Map<String, dynamic> json) {
-    active = json['active'];
-    id = json['id'].toString();
-    homeCollection = json['homeCollection'];
-    name = json['name'];
-    outSource = json['outSource'];
-    plans = json['plans'];
-    price = json['price'].toString();
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['active'] = active;
-    data['id'] = id;
-    data['homeCollection'] = homeCollection;
-    data['name'] = name;
-    data['outSource'] = outSource;
-    data['plans'] = plans;
-    data['price'] = price;
-    return data;
-  }
-}
-
-class HealthPackage {
-  bool? active;
-  String? description, id, name, parameters, price;
-  List<dynamic>? healthTests;
-  HealthPackage({
-    this.active,
-    this.description,
-    this.healthTests,
-    this.id,
-    this.name,
-    this.parameters,
-    this.price,
-  });
-  HealthPackage.fromJson(Map<String, dynamic> json) {
-    active = json['active'];
-    description = json['description'];
-    healthTests = json['healthTests'];
-    id = json['id'].toString();
-    name = json['name'];
-    parameters = json['parameters'].toString();
-    price = json['price'].toString();
-  }
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['active'] = active;
-    data['description'] = description;
-    data['healthTests'] = healthTests;
-    data['id'] = id;
-    data['name'] = name;
-    data['parameters'] = parameters;
-    data['price'] = price;
-
-    return data;
-  }
-}
+import 'package:laboratory/shared/presentation/model/geolocation_model.dart';
+import 'package:laboratory/shared/presentation/model/healthpackage_model.dart';
+import 'package:laboratory/shared/presentation/model/plans_model.dart';
+import 'package:laboratory/shared/presentation/model/tests_model.dart';
 
 class AppoitmentModel {
   int? mobile;
@@ -130,6 +25,7 @@ class AppoitmentModel {
   dynamic healthPackage;
   dynamic tests;
   AppoitmentModel({
+    required this.address,
     required this.date,
     required this.discountAmt,
     required this.distance,
@@ -150,6 +46,7 @@ class AppoitmentModel {
     required this.uId,
   });
   AppoitmentModel.fromJson(Map<String, dynamic> json) {
+    date = json['address'];
     date = json['date'];
     discountAmt = json['discountAmt'].toString();
     distance = json['distance'].toString();
@@ -165,13 +62,14 @@ class AppoitmentModel {
     pickupCharge = json['pickupCharge'].toString();
     staffId = json['staffId'];
     status = json['status'];
-    tests = json['tests'];
+    tests = [...json['tests']];
     time = json['time'];
     uId = json['uId'].toString();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['address'] = address;
     data['date'] = date;
     data['discountAmt'] = discountAmt;
     data['distance'] = distance;

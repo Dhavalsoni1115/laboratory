@@ -8,15 +8,20 @@ import 'package:laboratory/login/presentation/screens/login_screen.dart';
 import 'package:laboratory/shared/presentation/screens/appoitment_detail_screen.dart';
 import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/shared/presentation/screens/map_show.dart';
+import 'package:laboratory/shared/services/notification_service.dart';
 import 'package:laboratory/splash/presentation/screen/splash_screen.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login/data/data_source/staff_shared_pref.dart';
 
+String? token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print('=======dfgbdfgdfg');
+  // print(fcmToken);
   return runApp(const MyApp());
 }
 
@@ -39,11 +44,13 @@ class _MyAppState extends State<MyApp> {
     return token;
   }
 
+  NotificationService notificationService = NotificationService();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getToken();
+    notificationService.requestNotificationPermission();
+    notificationService.getDeviceToken().then((value) => print(value));
   }
 
   @override
