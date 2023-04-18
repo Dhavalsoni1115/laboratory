@@ -1,7 +1,7 @@
-class GeoLocation {
+class GeoLocationModel {
   double? lat, long;
-  GeoLocation({required this.lat, required this.long});
-  GeoLocation.fromJson(Map<String, dynamic> json) {
+  GeoLocationModel({required this.lat, required this.long});
+  GeoLocationModel.fromJson(Map<String, dynamic> json) {
     lat = json['lat'];
     long = json['long'];
   }

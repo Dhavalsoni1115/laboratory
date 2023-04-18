@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:laboratory/shared/presentation/widget/card_detail.dart';
 import 'package:skeletons/skeletons.dart';
+import 'package:intl/intl.dart';
 
 import '../screens/appoitment_detail_screen.dart';
 
@@ -25,12 +26,15 @@ class ShowCard extends StatelessWidget {
               DocumentSnapshot doc = snapshot.data!.docs[index];
               print('docData');
               print(doc);
+              String id =
+                  doc.data().containsKey('staffId') ? doc['staffId'] : '';
+              print(id);
               // final DateTime now = doc['date'];
               // final DateFormat formatter = DateFormat('dd MMM yyyy');
-              // final DateFormat timeformatter = DateFormat('hh:mm a');
-              // final String formatted = formatter.format(now);
-              // final String timeFormated = timeformatter.format(now);
-              return doc['status'] == status && doc['staffId'] == staffId
+              // final String formatted = formatter.format(doc['date']);
+              // DateFormat.yMMMd().format(DateTime.now());
+
+              return id.isNotEmpty && id == staffId && doc['status'] == status
                   ? CardDetail(
                       name: doc['name'],
                       email: doc['email'],

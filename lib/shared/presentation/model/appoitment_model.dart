@@ -1,7 +1,6 @@
-import 'dart:convert';
 import 'package:laboratory/shared/presentation/model/geolocation_model.dart';
 import 'package:laboratory/shared/presentation/model/healthpackage_model.dart';
-import 'package:laboratory/shared/presentation/model/plans_model.dart';
+import 'package:laboratory/shared/presentation/model/staff_model.dart';
 import 'package:laboratory/shared/presentation/model/tests_model.dart';
 
 class AppoitmentModel {
@@ -21,10 +20,12 @@ class AppoitmentModel {
       status,
       time,
       uId;
-  dynamic geoLocation;
-  dynamic healthPackage;
-  dynamic tests;
+  GeoLocationModel? geoLocation;
+  HealthPackageModel? healthPackage;
+  List<TestsModel>? tests;
+  dynamic staff;
   AppoitmentModel({
+    required this.staff,
     required this.address,
     required this.date,
     required this.discountAmt,
@@ -46,7 +47,8 @@ class AppoitmentModel {
     required this.uId,
   });
   AppoitmentModel.fromJson(Map<String, dynamic> json) {
-    date = json['address'];
+    staff = json['staff'];
+    address = json['address'];
     date = json['date'];
     discountAmt = json['discountAmt'].toString();
     distance = json['distance'].toString();
@@ -69,6 +71,7 @@ class AppoitmentModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['staff'] = staff;
     data['address'] = address;
     data['date'] = date;
     data['discountAmt'] = discountAmt;

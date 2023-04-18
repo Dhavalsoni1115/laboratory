@@ -44,13 +44,26 @@ class _MyAppState extends State<MyApp> {
     return token;
   }
 
-  NotificationService notificationService = NotificationService();
+  String? fcmToken;
+  dynamic getFcmToken() async {
+    NotificationService notificationService = NotificationService();
+    await notificationService.getDeviceToken().then((value) {
+      setState(() {
+        fcmToken = value;
+      });
+    });
+    print(fcmToken);
+    return fcmToken;
+  }
+
   @override
   void initState() {
     super.initState();
     getToken();
-    notificationService.requestNotificationPermission();
-    notificationService.getDeviceToken().then((value) => print(value));
+
+    // notificationService.requestNotificationPermission();
+    print('=====UserToken======');
+    getFcmToken();
   }
 
   @override

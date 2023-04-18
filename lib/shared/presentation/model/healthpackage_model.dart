@@ -1,9 +1,9 @@
 
-class HealthPackage {
+class HealthPackageModel {
   bool? active;
   String? description, id, name, parameters, price;
   List<dynamic>? healthTests;
-  HealthPackage({
+  HealthPackageModel({
     this.active,
     this.description,
     this.healthTests,
@@ -12,7 +12,7 @@ class HealthPackage {
     this.parameters,
     this.price,
   });
-  HealthPackage.fromJson(Map<String, dynamic> json) {
+  HealthPackageModel.fromJson(Map<String, dynamic> json) {
     active = json['active'];
     description = json['description'];
     healthTests = [...json['healthTests']];

@@ -1,10 +1,10 @@
 import 'package:laboratory/shared/presentation/model/plans_model.dart';
 
-class Tests {
-  String? homeCollection, id, name, price;
-  List<Plans>? plans;
-  bool? outSource, active;
-  Tests({
+class TestsModel {
+  String? id, name, price;
+  List<PlansModel>? plans;
+  bool? outSource, active, homeCollection;
+  TestsModel({
     this.active,
     this.id,
     this.homeCollection,
@@ -13,7 +13,7 @@ class Tests {
     this.plans,
     this.price,
   });
-  Tests.fromJson(Map<String, dynamic> json) {
+  TestsModel.fromJson(Map<String, dynamic> json) {
     active = json['active'];
     id = json['id'].toString();
     homeCollection = json['homeCollection'];

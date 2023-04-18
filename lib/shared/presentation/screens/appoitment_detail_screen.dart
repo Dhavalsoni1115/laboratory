@@ -7,9 +7,12 @@ import 'package:laboratory/home/presentation/screens/home_screen.dart';
 import 'package:laboratory/shared/data/data_source/call_data.dart';
 import 'package:laboratory/open/presentation/screens/open_screen.dart';
 import 'package:laboratory/shared/data/data_source/get_appoitment_data.dart';
+import 'package:laboratory/shared/data/data_source/get_current_location.dart';
 import 'package:laboratory/shared/presentation/model/appoitment_model.dart';
 import 'package:laboratory/shared/presentation/model/geolocation_model.dart';
 import 'package:laboratory/shared/presentation/model/healthpackage_model.dart';
+import 'package:laboratory/shared/presentation/model/plans_model.dart';
+import 'package:laboratory/shared/presentation/model/staff_model.dart';
 import 'package:laboratory/shared/presentation/model/tests_model.dart';
 import 'package:laboratory/shared/presentation/widget/common_button.dart';
 import 'package:laboratory/shared/presentation/widget/show_text.dart';
@@ -44,63 +47,60 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
   AppoitmentModel? selectedAppoitmentData;
   getSelectedStaff() async {
     var appoitment = Appoitment();
-    dynamic appoitmentData =
+    Map<String, dynamic> appoitmentData =
         await appoitment.getAppoitment(widget.appoitmentId);
-    // print('.....................................');
-    // appoitmentData?['geoLocation'] =
-    //     GeoLocation.fromJson(appoitmentData?['geoLocation']);
-    // appoitmentData?['healthPackage'] =
-    //     HealthPackage.fromJson(appoitmentData?['healthPackage']);
-    // dynamic testPlans;
-    // dynamic tests;
+    print('.....................................');
+    appoitmentData['geoLocation'] =
+        GeoLocationModel.fromJson(appoitmentData['geoLocation']);
+    appoitmentData['healthPackage'] =
+        HealthPackageModel.fromJson(appoitmentData['healthPackage']);
+    appoitmentData['staff'] = StaffModel.fromJson(appoitmentData['staff']);
+    // appoitmentData['tests'] = StaffModel.fromJson(appoitmentData['tests']);
+    List<dynamic>? tests = appoitmentData['tests'] as List;
+    print('1111111111111111111111111111111111');
+    List<TestsModel> selectedTests = [];
+    for (var item in appoitmentData['tests']) {
+      var plans = item?['plans']!.map((i) => PlansModel.fromJson(i)).toList();
+      item['plans'] = plans;
+      selectedTests.add(TestsModel.fromJson(item));
+    }
+    print('-------------------------1111111111111111111111');
+    print(selectedTests);
+    appoitmentData['tests'] = selectedTests;
+    // appoitmentData['staff'] =
+    //     StaffModel.fromJson(staff);
+    // appoitmentData['tests'] = tests!.map((i) => TestsModel.fromJson(i)).toList();
     // for (var i in appoitmentData?['tests']) {
     //   setState(() {
-    //     tests = i;
     //     testPlans = i['plans'];
     //   });
     // }
 
-    // print('..........???');
-    // print(tests);
-    // print(testPlans);
-    // print('..........ZZZZ');
-    // print(appoitmentData['tests']);
-
-    //final planList = testPlans.map((i) => Plans.fromJson(i)).toList();
-    //List<Tests> testList = tests.map((i as Map<String, dynamic>) => Tests.fromJson(i)).toList();
-    //  List<Plans> planList =
-    //     appoitmentData?['tests'][0]['plans'].map((i) => Plans.fromJson(jsonDecode(i))).toList();
-
-    //print('+++++++++');
-    // print(planList);
-    //  print(testList);
-
-    // print(appoitmentData?['tests'][0]['plans']);
-    // appoitmentData?['tests'] = test;
-    // appoitmentData?['tests'] = Tests.fromJson(appoitmentData?['tests']);
-    // appoitmentData?['tests'][0]['plans'] = planList;
-
-    //appoitmentData?['tests'] = Tests.fromJson(appoitmentData?['tests']);
-
     selectedAppoitmentData = AppoitmentModel.fromJson(appoitmentData);
 
-    // selectedAppoitmentData!.geoLocation = location;
-    // selectedAppoitmentData!.geoLocation =
-    //     location.lat != null ? location : null;
-    // print(selectedAppoitmentData!.toJson());
-    // selectedAppoitmentData!.healthPackage =
-    //     HealthPackage.fromJson(appoitmentData?['healthPackage']);
-    //selectedAppoitmentData!.tests = Tests.fromJson(appoitmentData?['tests']);
-
     print(selectedAppoitmentData);
+    // setState(() {
+    //   selectedAppoitmentData;
+    // });
+  }
+
+  double? currentLattitude, currentLongitude;
+  getCurrentLocarion() async {
+    var location = CurrentLocation();
+    await location.getCurrentLocation();
+    // print('====CurrentLocation====');
+    // print(location.latitude.toString());
+    // print(location.longitude.toString());
     setState(() {
-      selectedAppoitmentData;
+      currentLattitude = location.latitude;
+      currentLongitude = location.longitude;
     });
   }
 
   @override
   void initState() {
     super.initState();
+    getCurrentLocarion();
     getSelectedStaff();
     //changeStatus();
   }
@@ -200,27 +200,26 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                Row(
-                  children: [
-                    ShowText(
-                      label: 'Health Package:',
-                      detail: selectedAppoitmentData!.healthPackage['name']
-                          .toString(),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    ShowText(
-                      label: 'Test:',
-                      detail:
-                          selectedAppoitmentData!.tests[0]['name'].toString(),
-                    ),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     ShowText(
+                //         label: 'Health Package:',
+                //         detail: selectedAppoitmentData!.healthPackage!.name
+                //             .toString()),
+                //   ],
+                // ),
+                // SizedBox(
+                //   height: 15,
+                // ),
+                // Row(
+                //   children: [
+                //     ShowText(
+                //       label: 'Test:',
+                //       detail:
+                //           selectedAppoitmentData!.tests[0]['name'].toString(),
+                //     ),
+                //   ],
+                // ),
                 SizedBox(
                   height: 15,
                 ),
@@ -259,12 +258,14 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                               width: 150,
                               child: CommonButton(
                                 buttonName: 'Get Direction',
-                                onPresse: () {
+                                onPresse: () async {
+                                  await getCurrentLocarion();
+
                                   setState(() {
                                     mapLauncher.MapLauncher.showDirections(
                                       mapType: mapLauncher.MapType.google,
-                                      origin:
-                                          mapLauncher.Coords(20.7702, 72.9824),
+                                      origin: mapLauncher.Coords(
+                                          currentLattitude!, currentLongitude!),
                                       originTitle: 'Your Locations',
                                       directionsMode:
                                           mapLauncher.DirectionsMode.driving,

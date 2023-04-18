@@ -1,11 +1,11 @@
-class Plans {
+class PlansModel {
   String? planId, planName, price;
-  Plans({
+  PlansModel({
     required this.planId,
     required this.planName,
     required this.price,
   });
-  Plans.fromJson(Map<String, dynamic> json) {
+  PlansModel.fromJson(Map<String, dynamic> json) {
     planId = json['planId'];
     planName = json['planName'];
     price = json['price'].toString();
