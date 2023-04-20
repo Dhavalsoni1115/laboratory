@@ -24,6 +24,7 @@ class ShowText extends StatelessWidget {
               text: detail,
               style: const TextStyle(
                 fontWeight: FontWeight.normal,
+                fontSize: 15,
               ),
             ),
           ],

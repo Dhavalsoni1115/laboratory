@@ -29,7 +29,10 @@ class _OpenScreenState extends State<OpenScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor,
-      body: ShowCard(staffId: widget.staffId, status: 'Open'),
+      body: ShowCard(
+        staffId: widget.staffId,
+        status: 'Open',
+      ),
     );
   }
 }

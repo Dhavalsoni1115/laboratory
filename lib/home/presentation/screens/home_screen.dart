@@ -26,12 +26,22 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int groupValue = 0;
-
+  Future<String> getFcmToken() async {
+    String fcmToken = await FirebaseMessaging.instance
+        .getToken()
+        .then((value) => value.toString());
+    print(fcmToken);
+    return fcmToken;
+    // print(await FirebaseMessaging.instance.getToken());
+  }
 
   @override
   void initState() {
     super.initState();
-   
+    print('=-=-=-=-=-=-=-');
+    //getFcmToken();
+    print('=-=-=-=-=-=-=-');
+    //print(FirebaseMessaging.instance.getToken());
   }
 
   @override

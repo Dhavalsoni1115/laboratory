@@ -30,7 +30,9 @@ class NotificationService {
   }
 
   Future<String> getDeviceToken() async {
-    String? fcmToken = await messege.getToken();
+    String fcmToken = await messege.getToken().then((value) {
+      return value;
+    });
     print(fcmToken);
     return fcmToken;
   }
@@ -42,19 +44,25 @@ class NotificationService {
     });
   }
 
-  // void inItLocalNotification(
-  //     BuildContext context, RemoteMessage message) async {
-  //   var androidInitializationSettings =
-  //       AndroidInitializationSettings('@mipmap/launcher_icon.png');
-  //   var initlizationSetting =
-  //       InitializationSettings(android: androidInitializationSettings);
-  //   await flutterLocalNotificationsPlugin.initialize(initlizationSetting,
-  //       onSelectNotification: (payload) {});
-  // }
+  void inItLocalNotification(
+      BuildContext context, RemoteMessage message) async {
+    var androidInitializationSettings =
+        AndroidInitializationSettings('@mipmap/launcher_icon.png');
+    var initlizationSetting =
+        InitializationSettings(android: androidInitializationSettings);
+    await flutterLocalNotificationsPlugin.initialize(
+      initlizationSetting,
+      onSelectNotification: (payload) {
+        handleMassage(context, message);
+        return;
+      },
+    );
+  }
 
-  void firebaseInit() {
+  void firebaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen(
       (message) {
+        inItLocalNotification(context, message);
         showNotification(message);
       },
     );
@@ -86,5 +94,11 @@ class NotificationService {
         notificationDetails,
       );
     });
+  }
+
+  void handleMassage(BuildContext context, RemoteMessage message) {
+    if (message.data == 'msg') {
+      //navigator.push
+    }
   }
 }

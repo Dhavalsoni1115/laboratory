@@ -98,32 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       onChange: (emailValue) {
                         email = emailValue;
                       },
-                      validator: (value) {
+                      validator: (String? value) {
                         if (value == null || value.isEmpty) {
                           return 'Please Enter Email';
                         }
-                        return null;
                       },
                     ),
-                    //  TextFormField(
-                    //   controller: emailController,
-                    //   obscureText: false,
-                    //   decoration: InputDecoration(
-                    //     // hintText: 'Email',
-                    //     border: InputBorder.none,
-                    //     label: Text('Email'),
-                    //   ),
-                    //   onChanged: (emailValue) {
-                    //     setState(() {
-                    //       email = emailValue.toString();
-                    //       print(emailValue);
-                    //       print(email);
-                    //     });
-                    //   },
-                    //   validator: (String? value) {
-                    //     return (value == null) ? 'Enter Email' : null;
-                    //   },
-                    // ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
@@ -141,11 +121,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         onChange: (passwordValue) {
                           password = passwordValue;
                         },
-                        validator: (value) {
+                        validator: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Password';
                           }
-                          return null;
                         },
                       ),
                     ),
@@ -176,39 +155,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: LoginButton(
                         buttonColor: primaryColor,
                         onPress: () async {
-                          print(email);
-                          print(password);
+                          if (_loginKey.currentState!.validate()) {
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Incorrect Email And Password.'),
+                              ),
+                            );
+                          }
                           var loginUser = Staff();
-                          //getCuttentStaffId();
-                          print('********');
-
                           var staffId = await loginUser.signInStaff(
                             context: context,
                             email: email!,
                             password: password!,
                           );
-                          print(staffId);
-                          if (_loginKey.currentState!.validate() && staffId != null) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Login Sucessfull')),
-                            );
-                          }else
-                          {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Incorrect Email And Password.')),
-                            ); 
-                          }
-
-                          //await sharedPref.storeLoginToken(staffId.toString());
-                          // String token = await sharedPref.getLoginToken();
-                          // print(token);
-                          print('xcvbxchvbxhmcv======');
                           await getSelectedStaff(staffId);
                           String selectedId =
                               await selectedStaffData!.id.toString();
 
                           if (staffId == selectedStaffData!.id) {
                             if (selectedStaffData!.active == true) {
+                              // If the form is valid, display a snackbar. In the real world,
+                              // you'd often call a server or save the information in a database.
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Login Sucessfull'),
+                                ),
+                              );
+
                               var sharedPref = LoginSharedPrefrance();
                               await sharedPref
                                   .storeLoginToken(staffId.toString());
@@ -224,6 +198,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) => HomeScreen(
                                     staffId: staffId.toString(),
                                   ),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Please Contact Admin'),
                                 ),
                               );
                             }

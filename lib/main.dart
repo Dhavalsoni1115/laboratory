@@ -19,10 +19,15 @@ String? token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // final fcmToken = await FirebaseMessaging.instance.getToken();
-  // print('=======dfgbdfgdfg');
-  // print(fcmToken);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessageingHandeler);
+
   return runApp(const MyApp());
+}
+
+@pragma('vm:entry point')
+Future<void> firebaseMessageingHandeler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print(message.notification!.title.toString());
 }
 
 class MyApp extends StatefulWidget {
@@ -44,26 +49,10 @@ class _MyAppState extends State<MyApp> {
     return token;
   }
 
-  String? fcmToken;
-  dynamic getFcmToken() async {
-    NotificationService notificationService = NotificationService();
-    await notificationService.getDeviceToken().then((value) {
-      setState(() {
-        fcmToken = value;
-      });
-    });
-    print(fcmToken);
-    return fcmToken;
-  }
-
   @override
   void initState() {
     super.initState();
     getToken();
-
-    // notificationService.requestNotificationPermission();
-    print('=====UserToken======');
-    getFcmToken();
   }
 
   @override

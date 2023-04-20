@@ -40,57 +40,43 @@ class AppoitmentDetailScreen extends StatefulWidget {
 
 class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
   String dropdownValue = 'Ongoing';
+
   List<String> dropdownItems = [
     'Ongoing',
     'Completed',
   ];
   AppoitmentModel? selectedAppoitmentData;
-  getSelectedStaff() async {
+  getSelectedAppotment() async {
     var appoitment = Appoitment();
     Map<String, dynamic> appoitmentData =
         await appoitment.getAppoitment(widget.appoitmentId);
-    print('.....................................');
+
     appoitmentData['geoLocation'] =
         GeoLocationModel.fromJson(appoitmentData['geoLocation']);
     appoitmentData['healthPackage'] =
         HealthPackageModel.fromJson(appoitmentData['healthPackage']);
     appoitmentData['staff'] = StaffModel.fromJson(appoitmentData['staff']);
-    // appoitmentData['tests'] = StaffModel.fromJson(appoitmentData['tests']);
+
     List<dynamic>? tests = appoitmentData['tests'] as List;
-    print('1111111111111111111111111111111111');
+
     List<TestsModel> selectedTests = [];
     for (var item in appoitmentData['tests']) {
       var plans = item?['plans']!.map((i) => PlansModel.fromJson(i)).toList();
       item['plans'] = plans;
       selectedTests.add(TestsModel.fromJson(item));
     }
-    print('-------------------------1111111111111111111111');
-    print(selectedTests);
-    appoitmentData['tests'] = selectedTests;
-    // appoitmentData['staff'] =
-    //     StaffModel.fromJson(staff);
-    // appoitmentData['tests'] = tests!.map((i) => TestsModel.fromJson(i)).toList();
-    // for (var i in appoitmentData?['tests']) {
-    //   setState(() {
-    //     testPlans = i['plans'];
-    //   });
-    // }
 
+    appoitmentData['tests'] = selectedTests;
     selectedAppoitmentData = AppoitmentModel.fromJson(appoitmentData);
 
     print(selectedAppoitmentData);
-    // setState(() {
-    //   selectedAppoitmentData;
-    // });
   }
 
   double? currentLattitude, currentLongitude;
   getCurrentLocarion() async {
     var location = CurrentLocation();
     await location.getCurrentLocation();
-    // print('====CurrentLocation====');
-    // print(location.latitude.toString());
-    // print(location.longitude.toString());
+
     setState(() {
       currentLattitude = location.latitude;
       currentLongitude = location.longitude;
@@ -101,8 +87,7 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
   void initState() {
     super.initState();
     getCurrentLocarion();
-    getSelectedStaff();
-    //changeStatus();
+    getSelectedAppotment();
   }
 
   @override
@@ -177,7 +162,6 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                         detail: selectedAppoitmentData!.mobile.toString(),
                       ),
                     ),
-                    // selectedAppoitmentData!.status == 'Completed'?SizedBox(height: 10,):
                     IconButton(
                       onPressed: () async {
                         if (selectedAppoitmentData!.status == 'Completed') {
@@ -200,26 +184,32 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                 SizedBox(
                   height: 5,
                 ),
-                // Row(
-                //   children: [
-                //     ShowText(
-                //         label: 'Health Package:',
-                //         detail: selectedAppoitmentData!.healthPackage!.name
-                //             .toString()),
-                //   ],
-                // ),
-                // SizedBox(
-                //   height: 15,
-                // ),
-                // Row(
-                //   children: [
-                //     ShowText(
-                //       label: 'Test:',
-                //       detail:
-                //           selectedAppoitmentData!.tests[0]['name'].toString(),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  children: [
+                    selectedAppoitmentData!.healthPackage!.active == true
+                        ? ShowText(
+                            label: 'Health Package:',
+                            detail: selectedAppoitmentData!.healthPackage!.name
+                                .toString())
+                        : ShowText(
+                            label: 'Health Package:',
+                            detail: 'No Package'.toString(),
+                          ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: [
+                    ShowText(
+                      label: 'Test:',
+                      detail: selectedAppoitmentData!.tests!
+                          .map((e) => e.name)
+                          .toString(),
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 15,
                 ),
@@ -241,9 +231,11 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                       color: Colors.black,
                     ),
                   ),
-                  child: const GoogleMapScreen(
-                    latitude: 20.5965,
-                    longitude: 72.8996,
+                  child: GoogleMapScreen(
+                    latitude:
+                        selectedAppoitmentData!.geoLocation!.lat!.toDouble(),
+                    longitude:
+                        selectedAppoitmentData!.geoLocation!.long!.toDouble(),
                   ),
                 ),
                 selectedAppoitmentData!.status == 'Completed'
@@ -259,20 +251,24 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
                               child: CommonButton(
                                 buttonName: 'Get Direction',
                                 onPresse: () async {
-                                  await getCurrentLocarion();
-
                                   setState(() {
                                     mapLauncher.MapLauncher.showDirections(
                                       mapType: mapLauncher.MapType.google,
                                       origin: mapLauncher.Coords(
-                                          currentLattitude!, currentLongitude!),
+                                        currentLattitude!,
+                                        currentLongitude!,
+                                      ),
                                       originTitle: 'Your Locations',
                                       directionsMode:
                                           mapLauncher.DirectionsMode.driving,
                                       destinationTitle: 'Destination Location',
                                       destination: mapLauncher.Coords(
-                                        20.5965,
-                                        72.8996,
+                                        selectedAppoitmentData!
+                                            .geoLocation!.lat!
+                                            .toDouble(),
+                                        selectedAppoitmentData!
+                                            .geoLocation!.long!
+                                            .toDouble(),
                                       ),
                                     );
                                   });
@@ -364,19 +360,19 @@ class _AppoitmentDetailScreenState extends State<AppoitmentDetailScreen> {
         ),
       );
     } else {
-      return
-          // Skeleton(
-          //   isLoading: true,
-          //   skeleton: SkeletonListView(),
-          //   child: Container(child: Center(child: ListTile())),
-          // );
-          //     // ProgressIndicator();
-          Center(
-        child: LoadingAnimationWidget.twistingDots(
-          leftDotColor: primaryColor,
-          rightDotColor: secondaryColor,
-          size: 100,
-        ),
+      return Column(
+        children: [
+          Expanded(
+            child: Container(
+              color: backgroundColor,
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     }
   }

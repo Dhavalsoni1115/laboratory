@@ -95,9 +95,10 @@ class CardDetail extends StatelessWidget {
                           Text(
                             time,
                             style: TextStyle(
-                                fontSize: 14.5,
-                                color: primaryColor,
-                                fontWeight: FontWeight.bold),
+                              fontSize: 14.5,
+                              color: primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ],
                       ),

@@ -4,38 +4,58 @@ import 'package:laboratory/shared/presentation/widget/card_detail.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:intl/intl.dart';
 
+import '../../../constants.dart';
+import '../../data/data_source/get_appoitment_data.dart';
+import '../model/appoitment_model.dart';
+import '../model/geolocation_model.dart';
+import '../model/healthpackage_model.dart';
+import '../model/plans_model.dart';
+import '../model/staff_model.dart';
+import '../model/tests_model.dart';
 import '../screens/appoitment_detail_screen.dart';
 
-class ShowCard extends StatelessWidget {
+class ShowCard extends StatefulWidget {
   final String status, staffId;
   const ShowCard({Key? key, required this.staffId, required this.status})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: FirebaseFirestore.instance
-          .collection("appointments")
-          .orderBy('date')
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: snapshot.data!.docs.length,
-            itemBuilder: (context, index) {
-              DocumentSnapshot doc = snapshot.data!.docs[index];
-              print('docData');
-              print(doc);
-              String id =
-                  doc.data().containsKey('staffId') ? doc['staffId'] : '';
-              print(id);
-              // final DateTime now = doc['date'];
-              // final DateFormat formatter = DateFormat('dd MMM yyyy');
-              // final String formatted = formatter.format(doc['date']);
-              // DateFormat.yMMMd().format(DateTime.now());
+  State<ShowCard> createState() => _ShowCardState();
+}
 
-              return id.isNotEmpty && id == staffId && doc['status'] == status
-                  ? CardDetail(
+class _ShowCardState extends State<ShowCard> {
+  @override
+  Widget build(BuildContext context) {
+    var appoitmentData = FirebaseFirestore.instance
+        .collection("appointments")
+        .where('staffId', isEqualTo: widget.staffId);
+    return StreamBuilder(
+      stream: appoitmentData.snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+              child: CircularProgressIndicator(
+            color: primaryColor,
+          ));
+        }
+        if (snapshot.hasData) {
+          List<DocumentSnapshot> documents = snapshot.data!.docs;
+
+          documents = documents
+              .where((i) => i.data().containsValue(widget.status))
+              .toList();
+
+          if (documents.isNotEmpty) {
+            documents = documents.where((element) {
+              return element.data().containsValue(widget.status);
+            }).toList();
+          }
+          return documents.isNotEmpty
+              ? ListView.builder(
+                  itemCount: documents.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot doc = snapshot.data!.docs[index];
+                    return CardDetail(
                       name: doc['name'],
                       email: doc['email'],
                       mobileNumber: doc['mobile'].toString(),
@@ -55,15 +75,27 @@ class ShowCard extends StatelessWidget {
                           );
                         }
                       },
-                    )
-                  : SizedBox();
-            },
-          );
+                    );
+                    // : SizedBox();
+                  },
+                )
+              : Center(
+                  child: Text('No Appointment'),
+                );
         } else {
-          return Skeleton(
-            isLoading: true,
-            skeleton: SkeletonListView(),
-            child: Container(child: Center(child: ListTile())),
+          return Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: backgroundColor,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           );
         }
       },

@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Appoitment {
-  getAppoitment(String appoitmentId) async {
+  getAppoitment(String staffId) async {
     try {
       final firebase = FirebaseFirestore.instance.collection('appointments');
-      var selectedAppoitmentData = firebase
-          .doc(appoitmentId)
-          .get()
-          .then((DocumentSnapshot documentSnapshot) {
+      var selectedAppoitmentData =
+          firebase.doc(staffId).get().then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           // print('object');
           // print(documentSnapshot.data());
@@ -25,21 +23,21 @@ class Appoitment {
     }
   }
 
-//   getAllAppoitmentData() async {
-//     dynamic staffId;
-//     dynamic staffData;
+  // getAllAppoitmentData() async {
+  //   dynamic appotmentId;
+  //   dynamic appotmentData;
 
-//     try {
-//       QuerySnapshot querySnapshot =
-//           await FirebaseFirestore.instance.collection('appointments').get();
-//       staffData = querySnapshot.docs.map((doc) {
-//         staffId = doc.id;
-//         doc.data();
-//         return {'id': staffId, ...doc.data()};
-//       }).toList();
-//       return staffData;
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
- }
+  //   try {
+  //     QuerySnapshot querySnapshot =
+  //         await FirebaseFirestore.instance.collection('appointments').get();
+  //     appotmentData = querySnapshot.docs.map((doc) {
+  //       appotmentId = doc.id;
+  //       doc.data();
+  //       return {'id': appotmentId, ...doc.data()};
+  //     }).toList();
+  //     return appotmentData;
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
+}
