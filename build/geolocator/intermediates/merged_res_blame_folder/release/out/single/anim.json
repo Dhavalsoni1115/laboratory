@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_slide_in_bottom.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_slide_out_bottom.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_popup_exit.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_slide_out_top.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_fade_in.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_fade_out.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_tooltip_enter.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_tooltip_enter.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_tooltip_exit.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_tooltip_exit.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_slide_in_top.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/anim/abc_popup_enter.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/anim/abc_popup_enter.xml"
+    }
+]

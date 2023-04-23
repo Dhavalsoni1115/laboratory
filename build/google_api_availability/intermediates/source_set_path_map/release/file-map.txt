@@ -1,0 +1,14 @@
+com.baseflow.googleapiavailability.google_api_availability-jetified-annotation-experimental-1.1.0-0 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\4da258d73ad21ac3b77ed1f360b8c1be\transformed\jetified-annotation-experimental-1.1.0\res
+com.baseflow.googleapiavailability.google_api_availability-jetified-play-services-base-17.2.1-1 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\644a8ed736881b4cfc17b3665cf82408\transformed\jetified-play-services-base-17.2.1\res
+com.baseflow.googleapiavailability.google_api_availability-jetified-play-services-basement-17.2.1-2 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\6aa04c4fd054ae7526f4aaad5c7728ae\transformed\jetified-play-services-basement-17.2.1\res
+com.baseflow.googleapiavailability.google_api_availability-core-1.6.0-3 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\dc66a9e887fa197d342a9170a296fb1f\transformed\core-1.6.0\res
+com.baseflow.googleapiavailability.google_api_availability-jetified-window-java-1.0.0-beta04-4 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\f0b974b758349e9c54fcc6f9656f330a\transformed\jetified-window-java-1.0.0-beta04\res
+com.baseflow.googleapiavailability.google_api_availability-jetified-window-1.0.0-beta04-5 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\fd5f419e863560aa62f941d72f6221aa\transformed\jetified-window-1.0.0-beta04\res
+com.baseflow.googleapiavailability.google_api_availability-main-6 C:\Users\DHAVAL SONI\AppData\Local\Pub\Cache\hosted\pub.dev\google_api_availability-2.0.4\android\src\main\res
+com.baseflow.googleapiavailability.google_api_availability-release-7 C:\Users\DHAVAL SONI\AppData\Local\Pub\Cache\hosted\pub.dev\google_api_availability-2.0.4\android\src\release\res
+com.baseflow.googleapiavailability.google_api_availability-pngs-8 D:\projects\accurate_laboratry\build\google_api_availability\generated\res\pngs\release
+com.baseflow.googleapiavailability.google_api_availability-resValues-9 D:\projects\accurate_laboratry\build\google_api_availability\generated\res\resValues\release
+com.baseflow.googleapiavailability.google_api_availability-rs-10 D:\projects\accurate_laboratry\build\google_api_availability\generated\res\rs\release
+com.baseflow.googleapiavailability.google_api_availability-mergeReleaseResources-11 D:\projects\accurate_laboratry\build\google_api_availability\intermediates\incremental\release\mergeReleaseResources\merged.dir
+com.baseflow.googleapiavailability.google_api_availability-mergeReleaseResources-12 D:\projects\accurate_laboratry\build\google_api_availability\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+com.baseflow.googleapiavailability.google_api_availability-merged_res-13 D:\projects\accurate_laboratry\build\google_api_availability\intermediates\merged_res\release

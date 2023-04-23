@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/layout-watch-v20/abc_alert_dialog_title_material.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/layout-watch-v20/abc_alert_dialog_title_material.xml"
+    },
+    {
+        "merged": "com.baseflow.flutter.plugin.geolocator-merged_res-14:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml",
+        "source": "com.baseflow.flutter.plugin.geolocator-appcompat-1.0.1-4:/layout-watch-v20/abc_alert_dialog_button_bar_material.xml"
+    }
+]

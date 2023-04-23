@@ -1,0 +1,13 @@
+io.flutter.plugins.firebase.core.firebase_core-jetified-annotation-experimental-1.1.0-0 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\4da258d73ad21ac3b77ed1f360b8c1be\transformed\jetified-annotation-experimental-1.1.0\res
+io.flutter.plugins.firebase.core.firebase_core-jetified-play-services-basement-17.0.0-1 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\89c83b884711a6eab2f800de7d7ee8e7\transformed\jetified-play-services-basement-17.0.0\res
+io.flutter.plugins.firebase.core.firebase_core-core-1.6.0-2 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\dc66a9e887fa197d342a9170a296fb1f\transformed\core-1.6.0\res
+io.flutter.plugins.firebase.core.firebase_core-jetified-window-java-1.0.0-beta04-3 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\f0b974b758349e9c54fcc6f9656f330a\transformed\jetified-window-java-1.0.0-beta04\res
+io.flutter.plugins.firebase.core.firebase_core-jetified-window-1.0.0-beta04-4 C:\Users\DHAVAL SONI\.gradle\caches\transforms-3\fd5f419e863560aa62f941d72f6221aa\transformed\jetified-window-1.0.0-beta04\res
+io.flutter.plugins.firebase.core.firebase_core-main-5 C:\Users\DHAVAL SONI\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-0.7.0\android\src\main\res
+io.flutter.plugins.firebase.core.firebase_core-release-6 C:\Users\DHAVAL SONI\AppData\Local\Pub\Cache\hosted\pub.dev\firebase_core-0.7.0\android\src\release\res
+io.flutter.plugins.firebase.core.firebase_core-pngs-7 D:\projects\accurate_laboratry\build\firebase_core\generated\res\pngs\release
+io.flutter.plugins.firebase.core.firebase_core-resValues-8 D:\projects\accurate_laboratry\build\firebase_core\generated\res\resValues\release
+io.flutter.plugins.firebase.core.firebase_core-rs-9 D:\projects\accurate_laboratry\build\firebase_core\generated\res\rs\release
+io.flutter.plugins.firebase.core.firebase_core-mergeReleaseResources-10 D:\projects\accurate_laboratry\build\firebase_core\intermediates\incremental\release\mergeReleaseResources\merged.dir
+io.flutter.plugins.firebase.core.firebase_core-mergeReleaseResources-11 D:\projects\accurate_laboratry\build\firebase_core\intermediates\incremental\release\mergeReleaseResources\stripped.dir
+io.flutter.plugins.firebase.core.firebase_core-merged_res-12 D:\projects\accurate_laboratry\build\firebase_core\intermediates\merged_res\release

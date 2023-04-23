@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "com.baseflow.googleapiavailability.google_api_availability-merged_res-12:/color/common_google_signin_btn_text_light.xml",
+        "source": "com.baseflow.googleapiavailability.google_api_availability-jetified-play-services-base-17.2.1-1:/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "com.baseflow.googleapiavailability.google_api_availability-merged_res-12:/color/common_google_signin_btn_text_dark.xml",
+        "source": "com.baseflow.googleapiavailability.google_api_availability-jetified-play-services-base-17.2.1-1:/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "com.baseflow.googleapiavailability.google_api_availability-merged_res-12:/color/common_google_signin_btn_tint.xml",
+        "source": "com.baseflow.googleapiavailability.google_api_availability-jetified-play-services-base-17.2.1-1:/color/common_google_signin_btn_tint.xml"
+    }
+]
